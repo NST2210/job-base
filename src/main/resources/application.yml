@@ -53,3 +53,17 @@ logging:
   level:
     org:
       quartz: INFO
+org:
+  jobrunr:
+    enabled: true
+    datasource:
+      url: jdbc:postgresql://localhost:5432/mydatabase
+      username: myuser
+      password: mypassword
+      driver-class-name: org.postgresql.Driver
+    background-job-server:
+      enabled: true
+    dashboard:
+      enabled: true
+schedule:
+  pay-ref-bonus: "0/10 * * * * *"

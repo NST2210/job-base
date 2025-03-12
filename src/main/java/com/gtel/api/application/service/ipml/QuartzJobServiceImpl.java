@@ -1,11 +1,11 @@
 package com.gtel.api.application.service.ipml;
 
-import com.gtel.api.application.service.JobService;
+import com.gtel.api.application.service.QuartzJobService;
 import com.gtel.api.application.service.dto.SchedulerJobInfo;
 import com.gtel.api.configs.JobScheduleCreator;
 import com.gtel.api.domains.models.postgres.Test;
 import com.gtel.api.infrastracture.repository.postgres.TestRepository;
-import com.gtel.api.jobs.DeleteAccountJob;
+import com.gtel.api.jobs.DeleteAccountQuartzJob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.quartz.*;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 @Log4j2
 @RequiredArgsConstructor
-public class JobServiceImpl implements JobService {
+public class QuartzJobServiceImpl implements QuartzJobService {
 
     private final TestRepository testRepository;
 
@@ -50,7 +50,7 @@ public class JobServiceImpl implements JobService {
         try {
             SchedulerJobInfo jobInfo = new SchedulerJobInfo();
             jobInfo.setJobName("JobDeleteAccount-" + userId);
-            jobInfo.setJobClass(DeleteAccountJob.class.getName());
+            jobInfo.setJobClass(DeleteAccountQuartzJob.class.getName());
             jobInfo.setRepeatTime(0L);
             jobInfo.setDescription("Job delete account Description");
 

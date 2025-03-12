@@ -13,13 +13,13 @@ import java.util.Optional;
 
 @Component
 @Log4j2
-public class DeleteAccountJob implements Job {
+public class DeleteAccountQuartzJob implements Job {
 
     @Autowired
     TestRepository testRepository;
 
     // Constructor mặc định
-    public DeleteAccountJob() {
+    public DeleteAccountQuartzJob() {
     }
 
     @Override
