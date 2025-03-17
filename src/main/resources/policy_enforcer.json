@@ -1,0 +1,43 @@
+{
+  "realm": "nst_test",
+  "auth-server-url": "http://127.0.0.1:8080",
+  "resource": "nst_app",
+  "credentials": {
+    "secret": "01LRHUsPQSDeN8sagx7omJfKUfCpGEy0"
+  } ,
+  "http-method-as-scope": true,
+  "paths": [
+    {
+      "path": "/v1/keycloak/public-api",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/swagger-ui/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/swagger/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/swagger/v3/api-docs",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/swagger-ui/**",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/login",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/v1/quartz-job/create/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/v1/test/by-name/*",
+      "enforcement-mode": "DISABLED"
+    }
+  ]
+}

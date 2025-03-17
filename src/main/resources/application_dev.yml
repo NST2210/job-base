@@ -1,0 +1,151 @@
+logging:
+  level:
+    org:
+      quartz: INFO
+springdoc:
+  swagger-ui:
+    operationSorter: method
+    path: /swagger-ui.html
+server:
+  port: 2106
+  servlet:
+    context-path: /nst-service/api
+
+spring:
+  config:
+    import: "optional:consul:"
+  application:
+    name: nst-service
+  datasource:
+    read:
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        connection-timeout: 30000
+        idle-timeout: 600000
+        max-lifetime: 1800000
+        maximum-pool-size: 10
+      jdbc-url: jdbc:postgresql://127.0.0.1:5432/mydatabase
+      jpa:
+        hibernate:
+          ddl-auto: update
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+      password: mypassword
+      username: myuser
+    write:
+      driver-class-name: org.postgresql.Driver
+      hikari:
+        maximum-pool-size: 10
+      jdbc-url: jdbc:postgresql://127.0.0.1:5432/mydatabase
+      jpa:
+        hibernate:
+          ddl-auto: update
+        properties:
+          hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+      password: mypassword
+      username: myuser
+  quartz:
+    job-store-type: jdbc
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: QuartzScheduler
+            instanceId: AUTO
+          jobStore:
+            #            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            tablePrefix: qrtz_
+            isClustered: true
+            dataSource: writeDataSource
+            misfireThreshold: 6000
+          threadPool:
+            threadCount: 5
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:8080/realms/nst_test
+  main:
+    allow-circular-references: true
+#redis:
+#  config-file: redis_single
+system:
+  configurations:
+    cors:
+      allow-credentials: true
+      allowed-methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - OPTIONS
+      allowed-header:
+        - Authorization
+        - Origin
+        - Content-Type
+        - Accept
+        - Accept-Encoding
+        - Accept-Language
+        - Accept-Control-Allow-Origin
+        - Accept-Control-Allow-Headers
+        - Accept-Control-Request-Method
+        - X-Requested_With
+        - X-Auth-Token
+        - X-Xsrf-Token
+        - Cache-Control
+        - Id-Token
+      exposed-header:
+        - X-Xsrf-Token
+      url-based-pattern-cors-configuration-source: /**
+      allowed-origin-pattern:
+        - http://localhost:3000
+        - http://localhost:4200
+        - http://localhost:5173
+        - http://localhost:63342
+    uri-white-list:
+      - '/v1/keycloak/public-api'
+      - '/swagger-ui.html'
+      - '/swagger/*'
+      - '/swagger-ui/*'
+      - '/swagger/v3/api-docs'
+      - '/swagger/v3/api-docs/*'
+      - '/login'
+    keycloak:
+      realm: nst_test
+      auth-server-url: http://127.0.0.1:8080
+      ssl-required: external
+      resource: nst_app
+      grant-type: password
+      credentials:
+        secret: "01LRHUsPQSDeN8sagx7omJfKUfCpGEy0"
+      policy-enforcer:
+        http-method-as-scope": true
+      base-url: http://127.0.0.1:8080/realms/nst_test
+#grpc:
+#  server:
+#    port: 9090
+#minio:
+#  url: minio.ttpm.local
+#  access-key: hhhhhh
+#  secret-key: ffffff
+#  bucket-name: gfeid-3n
+#  region: us-east-1
+#  expiry: 60
+org:
+  jobrunr:
+    enabled: true
+    datasource:
+      url: jdbc:postgresql://127.0.0.1:5432/mydatabase
+      username: myuser
+      password: mypassword
+      driver-class-name: org.postgresql.Driver
+    background-job-server:
+      enabled: true
+    dashboard:
+      enabled: true
+schedule:
+  pay-ref-bonus: "0/10 * * * * *"

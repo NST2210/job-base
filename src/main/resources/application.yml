@@ -1,69 +1,16 @@
-server:
-  port: 8081
-
 spring:
-  datasource:
-    read:
-      driver-class-name: org.postgresql.Driver
-      hikari:
-        connection-timeout: 30000
-        idle-timeout: 600000
-        max-lifetime: 1800000
-        maximum-pool-size: 10
-      jdbc-url: jdbc:postgresql://localhost:5432/mydatabase
-      jpa:
-        hibernate:
-          ddl-auto: update
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.PostgreSQLDialect
-      password: mypassword
-      username: myuser
-    write:
-      driver-class-name: org.postgresql.Driver
-      hikari:
-        maximum-pool-size: 10
-      jdbc-url: jdbc:postgresql://localhost:5432/mydatabase
-      jpa:
-        hibernate:
-          ddl-auto: update
-        properties:
-          hibernate:
-            dialect: org.hibernate.dialect.PostgreSQLDialect
-      password: mypassword
-      username: myuser
-  quartz:
-    job-store-type: jdbc
-    properties:
-      org:
-        quartz:
-          scheduler:
-            instanceName: QuartzScheduler
-            instanceId: AUTO
-          jobStore:
-#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
-            tablePrefix: qrtz_
-            isClustered: true
-            dataSource: writeDataSource
-            misfireThreshold: 6000
-          threadPool:
-            threadCount: 5
-logging:
-  level:
-    org:
-      quartz: INFO
-org:
-  jobrunr:
-    enabled: true
-    datasource:
-      url: jdbc:postgresql://localhost:5432/mydatabase
-      username: myuser
-      password: mypassword
-      driver-class-name: org.postgresql.Driver
-    background-job-server:
-      enabled: true
-    dashboard:
-      enabled: true
-schedule:
-  pay-ref-bonus: "0/10 * * * * *"
+  config:
+    import: 'optional:consul:'
+  application:
+    name: nst-service
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        watch.enabled: true
+        fail-fast: true
+#        default-context: application
+#        profile-separator: "-"
+        format: yaml
