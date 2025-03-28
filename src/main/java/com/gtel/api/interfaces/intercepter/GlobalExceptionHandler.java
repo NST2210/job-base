@@ -1,6 +1,7 @@
 package com.gtel.api.interfaces.intercepter;
 
 import com.gtel.api.domains.exceptions.ApplicationException;
+import com.gtel.api.interfaces.configguration.i18n.LocaleStringService;
 import com.gtel.api.interfaces.models.response.BadRequestResponse;
 import io.micrometer.tracing.Tracer;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class GlobalExceptionHandler {
 
     private final Tracer tracer;
 
-//    private final LocaleStringService localeStringService;
+    private final LocaleStringService localeStringService;
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> hanldeException(Exception e) {
@@ -32,8 +33,7 @@ public class GlobalExceptionHandler {
         log.info("handleApplicationException {} with message {}, title {}, data {}", ex.getCode(), ex.getMessage(), ex.getTitle(), ex.getData(), ex);
         BadRequestResponse response = new BadRequestResponse(ex, httpServletRequest);
 
-        String message = ex.getMessage();
-//        String message = localeStringService.getMessage("ddddd", ex.getMessage());
+        String message = localeStringService.getMessage("test.message", ex.getMessage());
         response.setTitle(message);
 
         String traceId = tracer.currentTraceContext().context() == null ? Thread.currentThread().getName() : tracer.currentTraceContext().context().traceId();

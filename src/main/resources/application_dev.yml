@@ -128,13 +128,13 @@ system:
 #grpc:
 #  server:
 #    port: 9090
-#minio:
-#  url: minio.ttpm.local
-#  access-key: hhhhhh
-#  secret-key: ffffff
-#  bucket-name: gfeid-3n
-#  region: us-east-1
-#  expiry: 60
+minio:
+  url: http://localhost:9000
+  access-key: d1h5tgt8xEvJxgYBQIBq
+  secret-key: Ttfl9fw8zvWqVqTLaABzd1STj7Vj26UGlsxqUsU8
+  bucket-name: nst-app
+  region: us-east-1
+  expiry: 60
 org:
   jobrunr:
     enabled: true
